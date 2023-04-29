@@ -1,3 +1,5 @@
+package model;
+
 public class Student {
 
     private String firstName;
@@ -33,4 +35,5 @@ public class Student {
     public void setEmail(String email) {
         this.email = email;
     }
+
 }

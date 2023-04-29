@@ -1,19 +1,23 @@
+package interfaces;
+
+import model.Student;
+import services.StudentService;
 import error.InvalidInputException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class UserInterface {
     private static final Scanner scanner = new Scanner(System.in);
-    private static final CredentialsValidator validator = new CredentialsValidator();
     private static final List<Student> students = new ArrayList<>();
-    private static final StudentParser parser = new StudentParser();
+    private static final StudentService studentService = new StudentService();
 
 
     public void showInterface(){
         printMessage("Learning Progress Tracker");
         while (scanner.hasNextLine()){
-            String nextLine = takeInput();
+            String nextLine =  scanner.nextLine();
             handleInput(nextLine);
 
         }
@@ -29,7 +33,7 @@ public class UserInterface {
         }
         else if (input.equals("add students")) {
             printMessage("Enter student credentials or 'back' to return");
-            addStudent();
+            addStudentInterface();
         }
         else if (input.equals("back")){
             printMessage("Enter 'exit' to exit the program.");
@@ -39,17 +43,17 @@ public class UserInterface {
         }
     }
 
-    public void addStudent(){
+    public void addStudentInterface(){
         String input;
         do {
-            input = scanner.nextLine();
+            input =  scanner.nextLine();
             if (input.equals("back")){
                 printMessage("Total " + students.size() + " students have been added.");
                 break;
             }
             else {
                 try{
-                    Student newStudent = parser.parse(input);
+                    Student newStudent = studentService.addStudent(input);
                     students.add(newStudent);
                     printMessage("The student has been added");
                 }catch (InvalidInputException e){
@@ -59,10 +63,6 @@ public class UserInterface {
             }
         }
         while (true);
-    }
-
-    private String takeInput(){
-        return scanner.nextLine();
     }
 
     private void printMessage(String message){

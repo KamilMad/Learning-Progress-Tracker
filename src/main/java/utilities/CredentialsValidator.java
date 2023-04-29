@@ -1,4 +1,7 @@
+package utilities;
+
 import error.InvalidInputException;
+import model.Student;
 
 import java.util.List;
 
@@ -15,7 +18,7 @@ public class CredentialsValidator {
     }
 
     private boolean isEmailValid(String credential){
-        String regex = "^[a-zA-Z0-9.!#$%&'*+/=? ^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)+$";
+        String regex = "^[a-zA-Z\\d.!#$%&'*+/=? ^_`{|}~-]+@[a-zA-Z\\d-]+(?:\\.[a-zA-Z\\d-]+)+$";
         return credential.matches(regex);
     }
 
@@ -41,6 +44,5 @@ public class CredentialsValidator {
 
         return new Student(firstName, lastName, email);
     }
-
 
 }
