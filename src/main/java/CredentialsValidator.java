@@ -1,9 +1,8 @@
+import error.InvalidInputException;
+
 import java.util.List;
 
 public class CredentialsValidator {
-
-    public CredentialsValidator() {
-    }
 
     private boolean isFirstNameValid(String credential){
         String regex = "^[a-zA-Z]([a-zA-Z]|[-'](?=[^-']))*[a-zA-Z]$";
@@ -20,7 +19,7 @@ public class CredentialsValidator {
         return credential.matches(regex);
     }
 
-    public boolean isValidStudent(List<String> nameLastNameAndEmail) {
+    public Student isValidStudent(List<String> nameLastNameAndEmail) throws InvalidInputException {
         String firstName = nameLastNameAndEmail.get(0);
         String email = nameLastNameAndEmail.get(2);
         String lastName = nameLastNameAndEmail.get(1);
@@ -31,19 +30,17 @@ public class CredentialsValidator {
         boolean isLastNameValid = isLastNameValid(lastName);
 
         if (!isFirstNameValid){
-            System.out.println("Incorrect first name.");
-            return false;
+            throw new InvalidInputException("Incorrect first name.");
         }
         else if (!isEmailValid){
-            System.out.println("Incorrect email");
-            return false;
+            throw new InvalidInputException("Incorrect email");
         }
         else if (!isLastNameValid){
-            System.out.println("Incorrect last name");
-            return false;
+            throw new InvalidInputException("Incorrect last name");
         }
 
-        return true;
+        return new Student(firstName, lastName, email);
     }
+
 
 }
